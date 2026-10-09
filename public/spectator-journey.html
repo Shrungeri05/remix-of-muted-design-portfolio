@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Spectator Journey — Brisbane River Spine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1F33;
+    --navy-2:#0E2842;
+    --navy-card:#11314D;
+    --teal:#1FA8A0;
+    --aqua:#5FD6C8;
+    --gold:#F2A65A;
+    --cream:#F4F1EA;
+    --slate:#7C93A0;
+    --ice:#C7D6DE;
+    --coral:#E06A4A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--navy);
+    color:var(--cream);
+    font-family:'Archivo',sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* atmospheric background */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(900px 600px at 78% 18%, rgba(31,168,160,.16), transparent 60%),
+      radial-gradient(700px 500px at 12% 88%, rgba(242,166,90,.10), transparent 60%),
+      radial-gradient(1200px 800px at 50% 50%, rgba(14,40,66,.6), transparent 70%);
+  }
+  /* faint grain */
+  body::after{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 28px}
+
+  /* ---------- HEADER ---------- */
+  header{padding:64px 0 8px}
+  .kicker{
+    font-size:14px;font-weight:700;letter-spacing:.32em;color:var(--aqua);
+    text-transform:uppercase;display:flex;align-items:center;gap:14px;
+  }
+  .kicker::before{content:"";width:34px;height:2px;background:var(--aqua);display:inline-block;border-radius:2px}
+  h1{
+    font-family:'Fraunces',serif;font-weight:600;line-height:1.02;
+    font-size:clamp(40px,7vw,84px);letter-spacing:-.02em;margin-top:18px;
+  }
+  h1 .gold{color:var(--gold);font-style:italic;font-weight:600}
+  .sub{
+    margin-top:20px;max-width:620px;font-size:clamp(16px,1.6vw,19px);
+    line-height:1.55;color:var(--ice);
+  }
+  .sub b{color:var(--cream);font-weight:600}
+
+  /* ---------- STAGE / MAP ---------- */
+  .stage{
+    position:relative;margin:46px 0 0;border-radius:22px;
+    background-color:#0B1F33;
+    background-image:linear-gradient(160deg, #0E2842 0%, #0B1F33 100%);
+    border:1px solid rgba(95,214,200,.14);
+    box-shadow:0 40px 90px -40px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.04);
+    overflow:hidden;
+  }
+  .stage-head{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    gap:16px;padding:22px 26px 6px;
+  }
+  .stage-title{font-family:'Fraunces',serif;font-size:22px;font-weight:600}
+  .stage-hint{font-size:13.5px;color:var(--slate);font-style:italic}
+  .stage-hint b{color:var(--aqua);font-style:normal;font-weight:600}
+  .legend{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+  .legend span{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ice)}
+  .swatch{width:26px;height:0;border-top:3px solid var(--aqua);border-radius:3px}
+  .swatch.gold{border-top:3px dashed var(--gold)}
+  .swatch.walk{border-top:3px dotted #FFD64A}
+
+  .map-shell{position:relative;width:100%;overflow:hidden}
+  svg.map{display:block;width:100%;height:auto}
+
+  /* route drawing */
+  .route-base{fill:none;stroke:#14525C;stroke-width:7;stroke-linecap:round;opacity:.55}
+  .leg{
+    fill:none;stroke:var(--aqua);stroke-width:4;stroke-linecap:round;
+    filter:drop-shadow(0 0 6px rgba(95,214,200,.75));
+    stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
+    transition:stroke-dashoffset 1.25s cubic-bezier(.7,0,.3,1);
+  }
+  .leg.lit{stroke-dashoffset:0}
+  .leg.gold{stroke:var(--gold);stroke-width:3.4;stroke-dasharray:10 9;
+    filter:drop-shadow(0 0 5px rgba(242,166,90,.6));animation:none;
+    opacity:0;transition:opacity .2s}
+  .leg.gold.lit{opacity:1;animation:march 1s linear infinite}
+  /* yellow walkable last-mile */
+  .leg.walk{stroke:#FFD64A;stroke-width:3.4;stroke-dasharray:2 8;
+    filter:drop-shadow(0 0 6px rgba(255,214,74,.7));
+    opacity:0;transition:opacity .25s}
+  .leg.walk.lit{opacity:1;animation:march2 .9s linear infinite}
+  @keyframes march{to{stroke-dashoffset:-19}}
+  @keyframes march2{to{stroke-dashoffset:-10}}
+
+  /* dark-map text labels */
+  .maptxt{font-family:'Archivo',sans-serif;pointer-events:none}
+  .maptxt.town{fill:#3D5B72;font-size:10px;font-weight:600;letter-spacing:.14em}
+  .maptxt.green{fill:#2E5644;font-size:8.5px;font-weight:600;letter-spacing:.1em}
+  .maptxt.water{fill:#2D6B82;font-size:13px;font-style:italic;font-weight:500;letter-spacing:.05em}
+
+  /* intermediate ferry stops */
+  .fstop circle{fill:#0B1F33;stroke:var(--aqua);stroke-width:2.2;
+    filter:drop-shadow(0 0 3px rgba(95,214,200,.5))}
+  .fstoplbl{font-family:'Archivo';fill:var(--ice);font-size:10px;font-weight:600;
+    opacity:.78;pointer-events:none}
+
+  /* nodes */
+  .node{cursor:pointer}
+  .node .halo{fill:rgba(95,214,200,.0);transition:fill .3s}
+  .node:hover .halo{fill:rgba(95,214,200,.12)}
+  .node .dot{fill:var(--aqua);stroke:var(--navy);stroke-width:3;
+    filter:drop-shadow(0 0 6px rgba(95,214,200,.7));transition:r .25s, transform .25s}
+  .node:hover .dot{r:13}
+  .node.done .dot{fill:var(--cream)}
+  .node .ring{fill:none;stroke:var(--aqua);stroke-width:2;opacity:.0;transform-origin:center}
+  .node.pulse .ring{animation:pulse 1.6s ease-out infinite}
+  @keyframes pulse{0%{opacity:.7;r:11}100%{opacity:0;r:30}}
+
+  .stadium .dot{fill:var(--gold);filter:drop-shadow(0 0 8px rgba(242,166,90,.75))}
+  .stadium{opacity:0;transform-origin:center;transition:opacity .5s, transform .5s;transform:scale(.4)}
+  .stadium.show{opacity:1;transform:scale(1)}
+
+  /* ferry */
+  #ferry{opacity:0;transition:opacity .3s}
+  #ferry.sail{opacity:1}
+  #ferry circle{fill:var(--cream);filter:drop-shadow(0 0 7px rgba(244,241,234,.85))}
+
+  /* map labels */
+  .mlabel{font-family:'Archivo',sans-serif;fill:var(--cream);font-size:15px;font-weight:700}
+  .mlabel.sub{fill:var(--aqua);font-size:12px;font-weight:500}
+  .mlabel.sub.muted{fill:var(--slate)}
+  .mlabel.gold{fill:var(--gold)}
+
+  /* ---------- CARDS ---------- */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:20px 26px 28px}
+  .card{
+    position:relative;border-radius:15px;padding:20px 20px 18px;
+    background:linear-gradient(165deg, rgba(17,49,77,.9), rgba(13,38,62,.95));
+    border:1px solid rgba(95,214,200,.16);
+    opacity:.32;transform:translateY(10px);filter:saturate(.5);
+    transition:all .6s cubic-bezier(.5,0,.2,1);
+  }
+  .card.active{opacity:1;transform:translateY(0);filter:none;
+    border-color:rgba(95,214,200,.5);
+    box-shadow:0 22px 50px -30px rgba(31,168,160,.55)}
+  .card.gold.active{border-color:rgba(242,166,90,.55);
+    box-shadow:0 22px 50px -30px rgba(242,166,90,.5)}
+  .card .step{font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--aqua)}
+  .card.gold .step{color:var(--gold)}
+  .card .big{font-family:'Fraunces',serif;font-size:30px;font-weight:600;margin:8px 0 6px;line-height:1.05}
+  .card .desc{font-size:14px;line-height:1.5;color:var(--ice)}
+  .card.gold .desc{color:#E7C9A6}
+  .card .num{
+    position:absolute;top:16px;right:18px;font-family:'Fraunces',serif;
+    font-size:34px;font-weight:700;color:rgba(95,214,200,.18);line-height:1
+  }
+  .card.gold .num{color:rgba(242,166,90,.2)}
+
+  .stat-strip{
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 18px;
+    padding:0 26px 30px;
+  }
+  .stat-strip .figure{font-family:'Fraunces',serif;font-size:clamp(34px,4vw,52px);font-weight:700;color:var(--gold)}
+  .stat-strip .cap{font-size:15px;font-style:italic;color:var(--ice)}
+  .reset{
+    margin-left:auto;align-self:center;cursor:pointer;border:1px solid rgba(95,214,200,.3);
+    background:transparent;color:var(--aqua);font-family:'Archivo';font-size:13px;font-weight:600;
+    padding:9px 16px;border-radius:999px;letter-spacing:.04em;transition:all .25s
+  }
+  .reset:hover{background:rgba(95,214,200,.1);border-color:var(--aqua)}
+
+  /* ---------- TOGGLE SECTION ---------- */
+  .compare{margin:60px 0 30px}
+  .compare-head{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+  .compare h2{font-family:'Fraunces',serif;font-size:clamp(26px,3.4vw,40px);font-weight:600;letter-spacing:-.01em}
+  .compare .lead{color:var(--ice);font-size:16px;max-width:600px;margin:10px 0 26px;line-height:1.5}
+
+  .switch{display:inline-flex;background:var(--navy-2);border-radius:999px;padding:5px;
+    border:1px solid rgba(95,214,200,.18);margin-bottom:26px;gap:4px}
+  .switch button{
+    border:0;cursor:pointer;font-family:'Archivo';font-weight:600;font-size:14px;
+    padding:11px 22px;border-radius:999px;background:transparent;color:var(--slate);
+    transition:all .3s;letter-spacing:.02em
+  }
+  .switch button.on{background:var(--aqua);color:var(--navy)}
+  .switch button.on.road{background:var(--coral);color:var(--cream)}
+
+  .viz{
+    border-radius:18px;padding:30px;min-height:230px;
+    background:linear-gradient(160deg, rgba(14,40,66,.7), rgba(11,31,51,.92));
+    border:1px solid rgba(95,214,200,.14);position:relative;overflow:hidden
+  }
+  .viz-row{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:16px;min-height:42px}
+  .ico{width:13px;height:26px;border-radius:3px;display:inline-block;opacity:0;
+    transform:translateY(8px) scale(.8);animation:pop .4s forwards}
+  @keyframes pop{to{opacity:1;transform:translateY(0) scale(1)}}
+  .ico.car{background:linear-gradient(var(--coral),#b5482f);width:24px}
+  .ico.person{background:linear-gradient(var(--aqua),var(--teal))}
+  .viz .vlabel{font-size:13px;letter-spacing:.16em;font-weight:700;text-transform:uppercase;margin-bottom:6px}
+  .viz .vlabel.road{color:var(--coral)}
+  .viz .vlabel.river{color:var(--aqua)}
+  .viz .vnum{font-family:'Fraunces',serif;font-size:clamp(30px,3.6vw,46px);font-weight:700;margin-bottom:4px}
+  .viz .vnum.road{color:var(--coral)}
+  .viz .vnum.river{color:var(--aqua)}
+  .viz .vsub{color:var(--ice);font-size:14.5px;line-height:1.5;max-width:560px}
+  .viz .footnote{margin-top:18px;font-size:12px;color:var(--slate);font-style:italic}
+
+  footer{padding:40px 0 70px;color:var(--slate);font-size:13px;line-height:1.6}
+  footer b{color:var(--ice)}
+
+  @media(max-width:760px){
+    .cards{grid-template-columns:1fr}
+    .stage-head{flex-direction:column;align-items:flex-start}
+    .legend{order:3}
+    header{padding:42px 0 4px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header>
+    <div class="kicker">The Spectator Journey</div>
+    <h1>One river. One ticket.<br><span class="gold">Door to gate.</span></h1>
+    <p class="sub">Victoria Park sits at the city's heart, and the river reaches it from <b>both directions</b>. Spectators board along the riverfront precincts, converge at the CBD edge, and transfer a short last-mile to Brisbane Stadium. <b>No car. No car park. No new road.</b></p>
+  </header>
+
+  <!-- INTERACTIVE STAGE -->
+  <section class="stage">
+    <div class="stage-head">
+      <div>
+        <div class="stage-title">Trace the journey</div>
+        <div class="stage-hint"><b>Click each stop</b> to light up the route &rarr;</div>
+      </div>
+      <div class="legend">
+        <span><i class="swatch"></i> River spine (both directions)</span>
+        <span><i class="swatch walk"></i> Last-mile to stadium</span>
+      </div>
+    </div>
+
+    <div class="map-shell">
+      <svg class="map" viewBox="0 0 1180 520" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- land / water gradients in dark-map style -->
+          <linearGradient id="land" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0C2236"/>
+            <stop offset="1" stop-color="#0A1B2C"/>
+          </linearGradient>
+          <linearGradient id="water" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#103A52"/>
+            <stop offset="1" stop-color="#0D2E42"/>
+          </linearGradient>
+          <!-- clip so river water never spills past the map frame -->
+          <clipPath id="frame"><rect x="0" y="0" width="1180" height="520" rx="0"/></clipPath>
+        </defs>
+
+        <g clip-path="url(#frame)">
+          <!-- base land -->
+          <rect x="0" y="0" width="1180" height="520" fill="url(#land)"/>
+
+          <!-- ===== DARK-MAP STREET GRID (subtle) ===== -->
+          <g stroke="#13314A" stroke-width="1.1" opacity="0.55" fill="none">
+            <path d="M0,70 H1180 M0,140 H1180 M0,210 H1180 M0,300 H1180 M0,380 H1180 M0,450 H1180"/>
+            <path d="M120,0 V520 M260,0 V520 M400,0 V520 M560,0 V520 M720,0 V520 M880,0 V520 M1020,0 V520"/>
+          </g>
+          <!-- a few brighter arterials -->
+          <g stroke="#1A4060" stroke-width="2.2" opacity="0.7" fill="none" stroke-linecap="round">
+            <path d="M0,250 C200,240 360,300 520,300 C700,300 900,210 1180,235"/>
+            <path d="M360,0 C360,90 320,150 300,210 C285,260 300,300 300,330"/>
+            <path d="M900,40 C880,160 980,280 1010,400"/>
+          </g>
+
+          <!-- ===== PARKS / GREEN PATCHES ===== -->
+          <g fill="#13362B" opacity="0.8">
+            <!-- Victoria Park (inland, north of CBD) -->
+            <path d="M235,150 C310,138 388,152 398,195 C406,233 360,262 285,266 C222,270 196,234 200,190 C204,162 218,155 235,150 Z"/>
+            <!-- New Farm Park (river bend, mid) -->
+            <ellipse cx="700" cy="300" rx="50" ry="32"/>
+            <!-- South Bank parklands -->
+            <path d="M520,452 C568,443 608,460 603,488 C598,516 546,520 512,508 C489,498 494,463 520,452 Z"/>
+          </g>
+          <!-- green labels -->
+          <text class="maptxt green" x="300" y="120" text-anchor="middle">VICTORIA PARK</text>
+          <text class="maptxt green" x="700" y="304" text-anchor="middle">NEW FARM PK</text>
+          <text class="maptxt green" x="555" y="488" text-anchor="middle">SOUTH BANK</text>
+
+          <!-- ===== THE BRISBANE RIVER (clean continuous water ribbon) ===== -->
+          <!-- Two long reaches: Hamilton (top-right) down to HSW, and HSW round past South Bank/West End out to UQ St Lucia (bottom-left) -->
+          <!-- soft outer glow edge -->
+          <path d="M1180,150 C1050,120 905,120 800,168 C705,212 715,295 645,330 C560,372 505,360 478,398 C452,432 470,478 560,486 C470,496 380,470 300,478 C220,486 175,452 110,470 C75,480 70,500 90,520"
+                fill="none" stroke="#1C5066" stroke-width="56" stroke-linecap="round" opacity="0.30"/>
+          <!-- main water body -->
+          <path d="M1180,150 C1050,120 905,120 800,168 C705,212 715,295 645,330 C560,372 505,360 478,398 C452,432 470,478 560,486 C470,496 380,470 300,478 C220,486 175,452 110,470 C75,480 70,500 90,520"
+                fill="none" stroke="url(#water)" stroke-width="46" stroke-linecap="round" opacity="0.97"/>
+
+          <!-- river name, italic like map water labels -->
+          <text class="maptxt water" transform="translate(880,205) rotate(-12)">Brisbane River</text>
+          <text class="maptxt water" transform="translate(560,520) rotate(-2)">Brisbane River</text>
+
+          <!-- district labels (dark-map town labels) -->
+          <text class="maptxt town" x="1110" y="118" text-anchor="end">HAMILTON</text>
+          <text class="maptxt town" x="905" y="108">NEWSTEAD</text>
+          <text class="maptxt town" x="640" y="262" text-anchor="end">NEW FARM</text>
+          <text class="maptxt town" x="560" y="350" text-anchor="end">CBD</text>
+          <text class="maptxt town" x="640" y="445" text-anchor="middle">KANGAROO PT</text>
+          <text class="maptxt town" x="150" y="180" text-anchor="middle">SPRING HILL</text>
+          <text class="maptxt town" x="120" y="240" text-anchor="middle">ST LUCIA</text>
+        </g>
+
+        <!-- ===================== ROUTE LAYER ===================== -->
+        <!-- faint full route guide (both arms of the river toward HSW) -->
+        <path class="route-base" d="M1120,158 C1010,135 905,138 810,182 C720,224 720,295 650,328 C575,366 510,358 478,395"/>
+        <path class="route-base" d="M120,478 C190,470 250,478 320,478 C420,478 470,470 478,408"/>
+
+        <!-- ROUTE A (downstream from Hamilton) -> HSW : leg1 -->
+        <path id="leg1" class="leg" d="M1120,158 C1010,135 905,138 810,182 C720,224 720,295 650,328 C575,366 510,358 478,398"/>
+
+        <!-- ROUTE B (upstream from UQ St Lucia, sweeping the western/southern reach) -> HSW : leg2 -->
+        <path id="leg2" class="leg" d="M120,478 C190,468 250,480 320,480 C400,480 460,478 500,470 C540,462 470,432 478,402"/>
+
+        <!-- ferry stops on ROUTE A (real F1 CityCat terminals) -->
+        <g class="fstop" transform="translate(975,140)"><circle r="4.5"/></g>
+        <text class="fstoplbl" x="975" y="128" text-anchor="middle">Bretts Wharf</text>
+        <g class="fstop" transform="translate(812,182)"><circle r="4.5"/></g>
+        <text class="fstoplbl" x="826" y="178">Teneriffe</text>
+        <g class="fstop" transform="translate(700,300)"><circle r="4.5"/></g>
+        <text class="fstoplbl" x="714" y="296">New Farm Park</text>
+        <!-- ferry stops on ROUTE B (real F1 CityCat terminals, UQ -> HSW) -->
+        <g class="fstop" transform="translate(245,478)"><circle r="4.5"/></g>
+        <text class="fstoplbl" x="245" y="498" text-anchor="middle">West End</text>
+        <g class="fstop" transform="translate(380,479)"><circle r="4.5"/></g>
+        <text class="fstoplbl" x="380" y="499" text-anchor="middle">South Bank</text>
+        <g class="fstop" transform="translate(500,470)"><circle r="4.5"/></g>
+        <text class="fstoplbl" x="514" y="466">QUT Gardens Pt</text>
+
+        <!-- LEG 3 (yellow dotted last-mile): HSW -> Victoria Park stadium (UP, inland) -->
+        <path id="leg3" class="leg walk" d="M478,398 C440,355 395,285 360,215 C345,180 332,140 326,108"/>
+
+        <!-- ferry dot -->
+        <g id="ferry" transform="translate(1120,158)"><circle r="6"/></g>
+
+        <!-- STADIUM marker + icon (Victoria Park, inland north) -->
+        <g class="stadium" id="stadium" transform="translate(322,108)">
+          <!-- stadium icon: oval bowl -->
+          <ellipse cx="0" cy="0" rx="17" ry="11" fill="none" stroke="#F2A65A" stroke-width="2.4"/>
+          <ellipse cx="0" cy="0" rx="8.5" ry="5" fill="#F2A65A" opacity="0.85"/>
+        </g>
+        <text class="mlabel gold" x="322" y="64" text-anchor="middle">Brisbane Stadium</text>
+        <text class="mlabel sub gold" x="322" y="80" text-anchor="middle">Victoria Park &middot; main venue</text>
+
+        <!-- NODE 1: Hamilton (trigger Route A) -->
+        <g class="node" id="node1" transform="translate(1120,158)">
+          <circle class="halo" r="26"/>
+          <circle class="ring" r="11"/>
+          <circle class="dot" r="11"/>
+        </g>
+        <text class="mlabel" x="1108" y="190" text-anchor="end">Northshore Hamilton</text>
+        <text class="mlabel sub" x="1108" y="207" text-anchor="end">&#9650; riverfront housing precinct</text>
+
+        <!-- NODE 2: UQ St Lucia (trigger Route B) -->
+        <g class="node" id="node2" transform="translate(120,478)">
+          <circle class="halo" r="26"/>
+          <circle class="ring" r="11"/>
+          <circle class="dot" r="11"/>
+        </g>
+        <text class="mlabel" x="138" y="450">UQ St Lucia</text>
+        <text class="mlabel sub" x="138" y="467">&#9650; BOARD &middot; from the south</text>
+
+        <!-- NODE 3: Howard Smith Wharves (alight) -->
+        <g class="node" id="node3" transform="translate(478,398)">
+          <circle class="halo" r="26"/>
+          <circle class="ring" r="11"/>
+          <circle class="dot" r="11"/>
+        </g>
+        <text class="mlabel" x="496" y="392">Howard Smith Wharves</text>
+        <text class="mlabel sub" x="496" y="409">ALIGHT &#9660; both lines meet here</text>
+      </svg>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards">
+      <div class="card" id="card1">
+        <div class="num">01</div>
+        <div class="step">FROM THE NORTH</div>
+        <div class="big">Hamilton &rarr; city</div>
+        <div class="desc">Northshore Hamilton, a 304&nbsp;ha riverfront housing precinct, feeds the line downstream through Teneriffe and New Farm.</div>
+      </div>
+      <div class="card" id="card2">
+        <div class="num">02</div>
+        <div class="step">FROM THE SOUTH</div>
+        <div class="big">UQ &rarr; city</div>
+        <div class="desc">The same river runs the western reach: UQ St Lucia, West End, South Bank and QUT, all the way up to the CBD edge. Both lines converge.</div>
+      </div>
+      <div class="card gold" id="card3">
+        <div class="num">03</div>
+        <div class="step">ALIGHT &middot; LAST-MILE</div>
+        <div class="big">~2 km transfer</div>
+        <div class="desc">Both lines meet at Howard Smith Wharves. A short walk to the Metro &amp; busway takes you into Victoria Park.</div>
+      </div>
+    </div>
+
+    <div class="stat-strip">
+      <span class="figure" id="counter">0%</span>
+      <span class="cap">of the journey revealed</span>
+      <button class="reset" id="resetBtn">&#8635; Reset route</button>
+    </div>
+  </section>
+
+  <!-- COMPARE TOGGLE -->
+  <section class="compare">
+    <div class="compare-head">
+      <h2>Same people. One needs no new road.</h2>
+    </div>
+    <p class="lead">The river spine moves the equivalent of 2&ndash;3 motorway lanes of people, on infrastructure the city already owns. Toggle to see the difference.</p>
+
+    <div class="switch">
+      <button class="on road" id="btnRoad" data-mode="road">Widen the road</button>
+      <button id="btnRiver" data-mode="river">One river spine</button>
+    </div>
+
+    <div class="viz" id="viz"></div>
+  </section>
+
+  <footer>
+    <b>Sources &amp; method.</b> Ferry mode share 2.3% (Soltani et al. 2015); CityCat capacity 170 pax @ 25&nbsp;kn; F1 CityCat serves both Northshore Hamilton (now a 304&nbsp;ha riverfront housing precinct, Economic Development Queensland) and the western reach to UQ St Lucia via West End, South Bank and QUT Gardens Point. Brisbane Stadium at Victoria Park is the 63,000-seat main venue, with the Athletes' Village at the adjacent Bowen Hills / RNA Showgrounds (2032 Delivery Plan, 2025). Closest CityCat terminal to the stadium is Howard Smith Wharves (~2&nbsp;km); last-mile via existing Metro/busway. Corridor capacity ~4,000&ndash;6,000 people/hr/direction via multiple high-frequency services vs ~2,000/hr per motorway lane (indicative, derived from published figures). &nbsp;|&nbsp; <b>Pitch the Plan: Brisbane's Next Chapter</b>, PIA QEP.
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  // ---- route interaction ----
+  const legs = {1:document.getElementById('leg1'),2:document.getElementById('leg2'),3:document.getElementById('leg3')};
+  const cards = {1:document.getElementById('card1'),2:document.getElementById('card2'),3:document.getElementById('card3')};
+  const nodes = {1:document.getElementById('node1'),2:document.getElementById('node2'),3:document.getElementById('node3')};
+  const ferry = document.getElementById('ferry');
+  const stadium = document.getElementById('stadium');
+  const counter = document.getElementById('counter');
+  const state = {1:false,2:false,3:false};
+
+  // set dash lengths for draw animation
+  [1,2].forEach(i=>{
+    const L = legs[i].getTotalLength();
+    legs[i].style.setProperty('--len', L);
+  });
+
+  // pulse the first available node to invite clicking
+  function refreshPulse(){
+    [1,2,3].forEach(i=>nodes[i].classList.remove('pulse'));
+    const next = [1,2,3].find(i=>!state[i]);
+    if(next) nodes[next].classList.add('pulse');
+  }
+  refreshPulse();
+
+  function updateCounter(){
+    const done = [1,2,3].filter(i=>state[i]).length;
+    const pct = Math.round(done/3*100);
+    counter.textContent = pct + '%';
+  }
+
+  function sailFerry(leg, dur){
+    const path = leg; const L = path.getTotalLength();
+    ferry.classList.add('sail');
+    const t0 = performance.now();
+    function step(now){
+      const k = Math.min((now-t0)/dur,1);
+      const p = path.getPointAtLength(k*L);
+      ferry.setAttribute('transform',`translate(${p.x},${p.y})`);
+      if(k<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  function reveal(i){
+    if(state[i]) return;
+    // enforce order softly: allow any, but typical flow 1->2->3
+    state[i]=true;
+    legs[i].classList.add('lit');
+    nodes[i].classList.add('done');
+    cards[i].classList.add('active');
+    if(i===1){ sailFerry(legs[1],1250); }
+    if(i===2){ sailFerry(legs[2],1100); }
+    if(i===3){
+      setTimeout(()=>stadium.classList.add('show'),350);
+    }
+    refreshPulse();
+    updateCounter();
+  }
+
+  [1,2,3].forEach(i=>{
+    nodes[i].addEventListener('click',()=>reveal(i));
+  });
+
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    [1,2,3].forEach(i=>{
+      state[i]=false;
+      legs[i].classList.remove('lit');
+      nodes[i].classList.remove('done');
+      cards[i].classList.remove('active');
+    });
+    stadium.classList.remove('show');
+    ferry.classList.remove('sail');
+    updateCounter();
+    refreshPulse();
+  });
+
+  // ---- compare toggle ----
+  const viz = document.getElementById('viz');
+  const btnRoad = document.getElementById('btnRoad');
+  const btnRiver = document.getElementById('btnRiver');
+
+  function renderRoad(){
+    let icons='';
+    for(let i=0;i<36;i++){icons+=`<i class="ico car" style="animation-delay:${i*22}ms"></i>`;}
+    viz.innerHTML = `
+      <div class="vlabel road">Widen the road</div>
+      <div class="viz-row">${icons}</div>
+      <div class="vnum road">~2,000 / hr</div>
+      <div class="vsub">Per new motorway lane, and it fills right back up. Every lane needs land acquisition, structures, and decades of cost.</div>
+      <div class="footnote">36 vehicles shown &middot; one lane, one hour, induced demand not included.</div>`;
+  }
+  function renderRiver(){
+    let icons='';
+    for(let i=0;i<90;i++){icons+=`<i class="ico person" style="animation-delay:${i*9}ms"></i>`;}
+    viz.innerHTML = `
+      <div class="vlabel river">One river spine</div>
+      <div class="viz-row">${icons}</div>
+      <div class="vnum river">~4,000&ndash;6,000 / hr</div>
+      <div class="vsub">The equivalent of 2&ndash;3 motorway lanes of people, moving on the river we already own. No land acquisition. Frequency, not concrete.</div>
+      <div class="footnote">90 riders shown &middot; multiple high-frequency services, both directions.</div>`;
+  }
+  btnRoad.addEventListener('click',()=>{
+    btnRoad.classList.add('on','road');btnRiver.classList.remove('on');renderRoad();
+  });
+  btnRiver.addEventListener('click',()=>{
+    btnRiver.classList.add('on');btnRoad.classList.remove('on','road');renderRiver();
+  });
+  renderRoad();
+})();
+</script>
+</body>
+</html>

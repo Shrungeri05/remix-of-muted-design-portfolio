@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import ImagePlaceholder from "@/components/ImagePlaceholder";
 
 const HeroSection = () => {
   const containerVariants = {
@@ -54,7 +53,23 @@ const HeroSection = () => {
           className="w-full max-w-4xl mx-auto"
           variants={itemVariants}
         >
-          <ImagePlaceholder label="Hero image: selected project visual" className="aspect-[4/3]" />
+          <img
+            src="/images/hero-brisbane.webp"
+            alt="Brisbane city skyline and river"
+            className="block w-full aspect-[4/3] object-cover"
+            loading="eager"
+          />
+          <p className="text-mono text-[11px] text-foreground/50 text-right mt-2">
+            Photo:{" "}
+            <a
+              href="https://unsplash.com/photos/cityscape-view-of-a-large-modern-metropolis-rEGNFvN-poA"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-2 hover:text-foreground/80 transition-colors"
+            >
+              Sebastian Luo / Unsplash
+            </a>
+          </p>
         </motion.div>
 
         {/* Description below image */}

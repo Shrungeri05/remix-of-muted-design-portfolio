@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import ImagePlaceholder from "@/components/ImagePlaceholder";
+import ZoomableImage from "@/components/ZoomableImage";
 import type { CaseStudyData } from "@/data/caseStudies";
 
 const renderDescription = (text: string) =>
@@ -15,12 +15,14 @@ const renderDescription = (text: string) =>
   );
 
 const CaseStudy = ({ study }: { study: CaseStudyData }) => {
+  const [lead, ...rest] = study.images;
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation currentPage={study.navLabel} currentIndex={study.index} />
 
       <main className="min-h-screen pt-40 pb-16 px-8">
-        <div className="max-w-2xl mx-auto text-center">
+        <div className="max-w-3xl mx-auto text-center">
           <motion.h1
             className="heading-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground mb-8 leading-[0.95]"
             initial={{ opacity: 0, y: 30 }}
@@ -39,14 +41,16 @@ const CaseStudy = ({ study }: { study: CaseStudyData }) => {
           </motion.p>
         </div>
 
-        <motion.div
-          className="max-w-5xl mx-auto w-full mb-24"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <ImagePlaceholder label={study.images[0]} className="aspect-video" />
-        </motion.div>
+        {lead && (
+          <motion.div
+            className="max-w-5xl mx-auto w-full mb-24"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <ZoomableImage src={lead.src} alt={lead.alt} eager imgClassName="max-h-[80vh] object-contain mx-auto" />
+          </motion.div>
+        )}
 
         <div className="max-w-2xl mx-auto mb-24">
           <motion.p
@@ -59,39 +63,48 @@ const CaseStudy = ({ study }: { study: CaseStudyData }) => {
             {renderDescription(study.description)}
           </motion.p>
 
-          <motion.a
-            href={study.link?.href ?? "/#work"}
-            className="external-link"
+          <motion.div
+            className="flex flex-wrap items-center gap-x-8 gap-y-3"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            {study.link ? (
-              <>
+            {study.link && (
+              <a
+                href={study.link.href}
+                target={study.link.external ? "_blank" : undefined}
+                rel={study.link.external ? "noopener noreferrer" : undefined}
+                className="external-link"
+              >
                 {study.link.label}
                 <ArrowUpRight className="w-4 h-4" />
-              </>
-            ) : (
-              "Back to work"
+              </a>
             )}
-          </motion.a>
+            <a href="/#work" className="text-mono text-sm text-foreground/60 hover:text-foreground transition-colors duration-200">
+              Back to work
+            </a>
+          </motion.div>
         </div>
 
-        <div className="flex flex-col gap-8 max-w-5xl mx-auto">
-          {study.images.slice(1).map((label, index) => (
+        <div className="flex flex-col gap-10 max-w-5xl mx-auto">
+          {rest.map((image, index) => (
             <motion.div
-              key={label}
+              key={image.src}
               className="w-full"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: index * 0.05 }}
             >
-              <ImagePlaceholder label={label} className="aspect-video" />
+              <ZoomableImage src={image.src} alt={image.alt} imgClassName="max-h-[80vh] object-contain mx-auto" />
             </motion.div>
           ))}
         </div>
+
+        <p className="text-mono text-xs text-foreground/50 text-center mt-10">
+          Tap or click any image to enlarge it.
+        </p>
       </main>
 
       <Footer />
