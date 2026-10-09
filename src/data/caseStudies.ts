@@ -9,6 +9,9 @@ export interface CaseStudyData {
   /** Short name used in the home-page list and the navigation bar. */
   listName: string;
   listDate: string;
+  /** Small line above the role on the home-page list (organisation or course code). */
+  listContext: string;
+  /** Main line on the right of the home-page list (role or course name). */
   listRole: string;
   navLabel: string;
   index: string;
@@ -29,7 +32,8 @@ export const caseStudies: CaseStudyData[] = [
     group: "applied",
     listName: "Pitch the Plan",
     listDate: "2026",
-    listRole: "PIA Qld Finalist",
+    listContext: "PIA Queensland Emerging Planners",
+    listRole: "State Finalist (1 of 5)",
     navLabel: "Pitch the Plan",
     index: "02",
     title: "The River Runs Through It",
@@ -52,6 +56,7 @@ export const caseStudies: CaseStudyData[] = [
     group: "applied",
     listName: "UQ Maps Co-Design",
     listDate: "2026 · Ongoing",
+    listContext: "UQ Student-Staff Partnership",
     listRole: "Data Collection & Synthesis Lead",
     navLabel: "UQ Maps",
     index: "03",
@@ -70,6 +75,7 @@ export const caseStudies: CaseStudyData[] = [
     group: "applied",
     listName: "Armidale Botanic Garden",
     listDate: "2026",
+    listContext: "Practera Industry Consulting Project",
     listRole: "Visitor Experience Analyst",
     navLabel: "Armidale",
     index: "04",
@@ -89,7 +95,8 @@ export const caseStudies: CaseStudyData[] = [
     group: "academic",
     listName: "West End Urban Design",
     listDate: "2025",
-    listRole: "Urban Design",
+    listContext: "PLAN7122",
+    listRole: "Urban Design Studio",
     navLabel: "West End",
     index: "05",
     title: "A Connected, Creative West End",
@@ -109,7 +116,8 @@ export const caseStudies: CaseStudyData[] = [
     group: "academic",
     listName: "Saint Elmo EIA",
     listDate: "2025",
-    listRole: "Environmental Assessment",
+    listContext: "ENVM7206",
+    listRole: "Environmental Impact Assessment",
     navLabel: "Saint Elmo EIA",
     index: "06",
     title: "Testing an EIS Against Best Practice",
@@ -128,12 +136,13 @@ export const caseStudies: CaseStudyData[] = [
     group: "academic",
     listName: "GIS Land Suitability",
     listDate: "2026",
-    listRole: "Spatial Analysis",
+    listContext: "GEOM7005",
+    listRole: "Geographical Information Systems",
     navLabel: "GIS Suitability",
     index: "07",
     title: "Balancing Conservation and Growth",
     subtitle:
-      "GIS Land Suitability Study (GEOM7005): South D'Aguilar National Park. Semester 1, 2026. Group of three.",
+      "Geographical Information Systems (GEOM7005): Land Suitability Study, South D'Aguilar National Park. Semester 1, 2026. Group of three.",
     description:
       "I led the [environmental suitability analysis]: biodiversity value from remnant ecosystem data and proximity to D'Aguilar National Park, weighted equally and reclassified to a 1–5 scale in [ArcGIS Pro]. My teammates built the development suitability model, and together we produced a [conservation-first final allocation] across the 143 km² study area: 43% protection, 45% rural residential development and 12% transition.",
     images: [
@@ -147,7 +156,8 @@ export const caseStudies: CaseStudyData[] = [
     group: "academic",
     listName: "Sunshine Coast Transport",
     listDate: "2025",
-    listRole: "Transport Planning",
+    listContext: "PLAN7116",
+    listRole: "Transport System Analysis",
     navLabel: "Sunshine Coast",
     index: "08",
     title: "Making Room for Active Travel",
@@ -165,7 +175,8 @@ export const caseStudies: CaseStudyData[] = [
     group: "academic",
     listName: "Mumbai: Relocating Informality",
     listDate: "2026",
-    listRole: "Global South Planning",
+    listContext: "PLAN7612",
+    listRole: "Global South Cities",
     navLabel: "Mumbai",
     index: "09",
     title: "Relocating Informality",

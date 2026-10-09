@@ -68,6 +68,25 @@ const RowText = ({ index, name, dateRange, role }: { index: number; name: string
   </div>
 );
 
+const ProjectRowText = ({ study, index }: { study: CaseStudyData; index: number }) => (
+  <div className="flex-1 flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-8 text-left">
+    <div className="flex items-baseline gap-4 min-w-0">
+      <span className="text-mono text-xs text-foreground/40">{String(index + 1).padStart(2, "0")}</span>
+      <div className="min-w-0">
+        <span className="heading-display block text-xl md:text-2xl text-foreground">{study.listName}</span>
+        <span className="text-mono hidden md:block text-xs text-foreground/50 mt-1.5">{study.listDate}</span>
+      </div>
+    </div>
+    <div className="flex flex-col gap-1 text-mono pl-8 md:pl-0 md:text-right md:shrink-0">
+      <span className="text-xs tracking-wide text-foreground/55">
+        <span className="md:hidden">{study.listDate} · </span>
+        {study.listContext}
+      </span>
+      <span className="text-sm text-foreground/80">{study.listRole}</span>
+    </div>
+  </div>
+);
+
 const ProjectRow = ({ study, index }: { study: CaseStudyData; index: number }) => (
   <Link to={`/${study.slug}`} aria-label={`${study.listName}: view case study`}>
     <motion.div
@@ -77,7 +96,7 @@ const ProjectRow = ({ study, index }: { study: CaseStudyData; index: number }) =
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
     >
-      <RowText index={index} name={study.listName} dateRange={study.listDate} role={study.listRole} />
+      <ProjectRowText study={study} index={index} />
       <ArrowUpRight className="w-5 h-5 shrink-0 text-foreground/30 md:opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
     </motion.div>
   </Link>

@@ -13,17 +13,17 @@ const AboutSection = () => {
       <motion.h3 className="section-header mb-16" {...fadeUp(0)}>
         About
       </motion.h3>
-      <div className="grid gap-12 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10 md:items-center">
-        <motion.div className="w-full max-w-sm mx-auto md:max-w-none" {...fadeUp(0.1)}>
+      <div className="grid gap-12 md:grid-cols-2 md:gap-10 md:items-stretch">
+        <motion.div className="w-full max-w-sm mx-auto md:max-w-none md:h-full" {...fadeUp(0.1)}>
           <img
             src="/images/photo-portrait-ptp.webp"
             alt="Shrungeri Shrowty at PIA Queensland's Pitch the Plan 2026"
-            className="block w-full aspect-[4/5] object-cover object-top"
+            className="block w-full aspect-[4/5] md:aspect-auto md:h-full md:min-h-[26rem] object-cover object-top"
             loading="lazy"
           />
         </motion.div>
 
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col justify-center gap-8">
           <motion.p className="body-text" {...fadeUp(0.15)}>
             I am a Master of Urban and Regional Planning candidate at The University of Queensland, graduating in November 2026, with a background in architecture.
           </motion.p>

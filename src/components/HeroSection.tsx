@@ -41,12 +41,14 @@ const HeroSection = () => {
         </motion.div>
 
         {/* Tagline */}
-        <motion.p 
-          className="text-mono text-sm md:text-base tracking-widest text-foreground/70 uppercase mb-20"
-          variants={itemVariants}
-        >
-          Urban &amp; Regional Planning
-        </motion.p>
+        <motion.div className="mb-20" variants={itemVariants}>
+          <p className="text-mono text-sm md:text-base tracking-widest text-foreground/70 uppercase">
+            Master of Urban &amp; Regional Planning
+          </p>
+          <p className="text-mono text-xs md:text-sm tracking-widest text-foreground/50 uppercase mt-3">
+            The University of Queensland
+          </p>
+        </motion.div>
 
         {/* Featured Image */}
         <motion.div 

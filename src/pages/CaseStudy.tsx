@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ZoomableImage from "@/components/ZoomableImage";
@@ -19,7 +20,7 @@ const CaseStudy = ({ study }: { study: CaseStudyData }) => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation currentPage={study.navLabel} currentIndex={study.index} />
+      <Navigation currentPage={study.navLabel} currentIndex="01" />
 
       <main className="min-h-screen pt-40 pb-16 px-8">
         <div className="max-w-3xl mx-auto text-center">
@@ -81,9 +82,9 @@ const CaseStudy = ({ study }: { study: CaseStudyData }) => {
                 <ArrowUpRight className="w-4 h-4" />
               </a>
             )}
-            <a href="/#work" className="text-mono text-sm text-foreground/60 hover:text-foreground transition-colors duration-200">
+            <Link to="/#work" className="text-mono text-sm text-foreground/60 hover:text-foreground transition-colors duration-200">
               Back to work
-            </a>
+            </Link>
           </motion.div>
         </div>
 

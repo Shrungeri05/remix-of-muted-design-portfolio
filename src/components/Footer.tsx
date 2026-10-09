@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 const Footer = () => {
   const navItems = [
     { number: "1", label: "Work" },
-    { number: "2", label: "About" },
-    { number: "3", label: "Education" },
+    { number: "2", label: "Education" },
+    { number: "3", label: "About" },
     { number: "4", label: "Contact" },
   ];
 

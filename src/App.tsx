@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import CaseStudy from "./pages/CaseStudy";
 import { caseStudies } from "./data/caseStudies";
 import NotFound from "./pages/NotFound";
+import ScrollManager from "./components/ScrollManager";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollManager />
         <Routes>
           <Route path="/" element={<Index />} />
           {caseStudies.map((c) => (
