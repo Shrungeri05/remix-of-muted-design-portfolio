@@ -20,7 +20,7 @@ const AboutSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          Over a decade of experience crafting digital products, brands and experiences that are used by millions of people every day.
+          I am a Master of Urban and Regional Planning candidate at The University of Queensland, graduating in November 2026, with a background in architecture.
         </motion.p>
         
         <motion.p 
@@ -30,11 +30,11 @@ const AboutSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Embracing growth, I continually combine extensive experience in{" "}
-          <span className="text-emphasis">Product</span>,{" "}
-          <span className="text-emphasis">Motion</span>,{" "}
-          <span className="text-emphasis">Sound</span> and{" "}
-          <span className="text-emphasis">Brand</span> Design.
+          My work combines{" "}
+          <span className="text-emphasis">strategic and statutory planning</span>,{" "}
+          <span className="text-emphasis">environmental impact assessment</span>,{" "}
+          <span className="text-emphasis">GIS and spatial analysis</span> and{" "}
+          <span className="text-emphasis">urban design</span>.
         </motion.p>
         
         <motion.p 
@@ -44,7 +44,7 @@ const AboutSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          I am dedicated to shaping a better future through Design. My approach always puts people first — from clients to users.
+          I enjoy turning evidence and community needs into clear, practical planning recommendations.
         </motion.p>
         
         <motion.p 
@@ -54,7 +54,7 @@ const AboutSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          Curious and optimistic.
+          Curious, careful and people-first.
         </motion.p>
       </div>
     </section>

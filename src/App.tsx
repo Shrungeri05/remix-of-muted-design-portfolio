@@ -4,11 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import Verve from "./pages/Verve";
-import Spotify from "./pages/Spotify";
-import Figma from "./pages/Figma";
-import Notion from "./pages/Notion";
-import Explorations from "./pages/Explorations";
+import CaseStudy from "./pages/CaseStudy";
+import { caseStudies } from "./data/caseStudies";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,11 +18,9 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/verve" element={<Verve />} />
-          <Route path="/spotify" element={<Spotify />} />
-          <Route path="/figma" element={<Figma />} />
-          <Route path="/notion" element={<Notion />} />
-          <Route path="/explorations" element={<Explorations />} />
+          {caseStudies.map((c) => (
+            <Route key={c.slug} path={`/${c.slug}`} element={<CaseStudy study={c} />} />
+          ))}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

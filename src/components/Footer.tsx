@@ -22,7 +22,7 @@ const Footer = () => {
           {navItems.map((item) => (
             <a
               key={item.label}
-              href={`#${item.label.toLowerCase()}`}
+              href={`/#${item.label.toLowerCase()}`}
               className="flex items-center gap-3 text-mono text-sm text-foreground/70 hover:text-foreground transition-colors duration-200"
             >
               <span className="text-foreground/50">{item.number}</span>
@@ -33,8 +33,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-foreground/10">
-          <p className="text-mono text-xs text-foreground/50">© Maya Chen 2024</p>
-          <p className="text-mono text-xs text-foreground/50">Made in California</p>
+          <p className="text-mono text-xs text-foreground/50">© 2026 Shrungeri Shrowty</p>
         </div>
       </div>
     </motion.footer>

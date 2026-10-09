@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import heroForest from "@/assets/hero-forest.jpg";
+import ImagePlaceholder from "@/components/ImagePlaceholder";
 
 const HeroSection = () => {
   const containerVariants = {
@@ -35,9 +35,9 @@ const HeroSection = () => {
       >
         {/* Large Display Headline */}
         <motion.div className="mb-16" variants={itemVariants}>
-          <h1 className="heading-display text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-foreground leading-[0.9] tracking-tight">
-            <span className="block">MAYA</span>
-            <span className="block mt-2 md:mt-4">CHEN</span>
+          <h1 className="heading-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-foreground leading-[0.9] tracking-tight">
+            <span className="block">SHRUNGERI</span>
+            <span className="block mt-2 md:mt-4">SHROWTY</span>
           </h1>
         </motion.div>
 
@@ -46,7 +46,7 @@ const HeroSection = () => {
           className="text-mono text-sm md:text-base tracking-widest text-foreground/70 uppercase mb-20"
           variants={itemVariants}
         >
-          Product Design & Creative Direction
+          Urban &amp; Regional Planning
         </motion.p>
 
         {/* Featured Image */}
@@ -54,13 +54,7 @@ const HeroSection = () => {
           className="w-full max-w-4xl mx-auto"
           variants={itemVariants}
         >
-          <div className="aspect-[4/3] overflow-hidden">
-            <img 
-              src={heroForest} 
-              alt="Atmospheric forest landscape"
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <ImagePlaceholder label="Hero image: selected project visual" className="aspect-[4/3]" />
         </motion.div>
 
         {/* Description below image */}
@@ -68,7 +62,7 @@ const HeroSection = () => {
           className="body-text max-w-xl mx-auto mt-16 text-center"
           variants={itemVariants}
         >
-          Crafting products with clarity and purpose for over a decade.
+          Planning sustainable, connected and inclusive places.
         </motion.p>
       </motion.div>
     </section>
