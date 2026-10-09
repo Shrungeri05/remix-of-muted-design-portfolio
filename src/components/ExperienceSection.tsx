@@ -78,7 +78,7 @@ const ProjectRowText = ({ study, index }: { study: CaseStudyData; index: number 
         <span className="text-mono hidden md:block text-xs text-foreground/50 mt-1.5">{study.listDate}</span>
       </div>
     </div>
-    <div className="flex flex-col gap-1 text-mono pl-8 md:pl-0 md:text-right md:shrink-0">
+    <div className="flex flex-col gap-1 text-mono pl-8 md:pl-0 md:text-right md:max-w-[48%]">
       <span className="text-xs tracking-wide text-foreground/55">
         <span className="md:hidden">{study.listDate} · </span>
         {study.listContext}

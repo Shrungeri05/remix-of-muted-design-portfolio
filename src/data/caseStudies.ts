@@ -188,7 +188,7 @@ export const caseStudies: CaseStudyData[] = [
     listName: "Mumbai: Relocating Informality",
     listDate: "2026",
     listContext: "PLAN7612",
-    listRole: "Global South Cities: Development Planning Theory & Practice",
+    listRole: "Global South Cities",
     navLabel: "Mumbai",
     index: "09",
     title: "Relocating Informality",
