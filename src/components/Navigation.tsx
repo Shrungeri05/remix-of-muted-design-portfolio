@@ -48,6 +48,18 @@ const useActiveSection = (enabled: boolean) => {
   return active;
 };
 
+/** True once the page has scrolled past the very top. */
+const useScrolled = (threshold = 40) => {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > threshold);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, [threshold]);
+  return scrolled;
+};
+
 const brisbaneDate = () =>
   new Date().toLocaleDateString("en-AU", {
     day: "2-digit",
@@ -60,13 +72,23 @@ const Navigation = ({ currentPage, currentIndex = "01" }: NavigationProps) => {
   const location = useLocation();
   const isHome = location.pathname === "/";
   const activeSection = useActiveSection(isHome);
+  const scrolled = useScrolled();
 
   const label = isHome ? activeSection.label : currentPage || "Home";
   const number = isHome ? activeSection.number : currentIndex;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50">
-      <div className="max-w-7xl mx-auto px-8 py-8">
+      {/* Soft fade behind the bar so page content scrolling underneath doesn't clash with it */}
+      <div
+        aria-hidden
+        className={`pointer-events-none absolute inset-x-0 top-0 h-36 transition-opacity duration-500 ${scrolled ? "opacity-100" : "opacity-0"}`}
+        style={{
+          background:
+            "linear-gradient(to bottom, hsl(var(--background)) 0%, hsl(var(--background) / 0.97) 55%, hsl(var(--background) / 0) 100%)",
+        }}
+      />
+      <div className="relative max-w-7xl mx-auto px-8 py-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link

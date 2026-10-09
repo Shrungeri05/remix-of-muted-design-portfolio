@@ -1,6 +1,10 @@
 export interface CaseStudyImage {
   src: string;
   alt: string;
+  /** Also used as the figure caption. */
+  caption: string;
+  /** Photos run full width and fade into the page; graphics sit on cards. */
+  kind: "photo" | "graphic";
 }
 
 export interface CaseStudyData {
@@ -24,7 +28,13 @@ export interface CaseStudyData {
   images: CaseStudyImage[];
 }
 
-const img = (file: string, alt: string): CaseStudyImage => ({ src: `/images/${file}`, alt });
+const img = (file: string, alt: string): CaseStudyImage => ({
+  src: `/images/${file}`,
+  alt,
+  caption: alt.replace(/^(Graphic|Slide):\s*/, ""),
+  kind: "graphic",
+});
+const photo = (file: string, alt: string): CaseStudyImage => ({ ...img(file, alt), kind: "photo" });
 
 export const caseStudies: CaseStudyData[] = [
   {
@@ -43,12 +53,12 @@ export const caseStudies: CaseStudyData[] = [
       "Selected as [one of five finalists statewide] in PIA Queensland's Pitch the Plan 2026, I presented this proposal to an industry panel with co-presenter A/Prof Dorina Pojani. Only 2.3% of Brisbane's public transport trips use the river, yet South East Queensland will grow by 2.2 million people by 2046. The proposal makes the river a [transit spine] on three pillars: a high-frequency ferry spine, [ferry-oriented development] around every landing, and walkable last-mile links. It is staged to start with low-cost frequency uplift before 2032 and part-funded through [value capture].",
     link: { label: "Explore the interactive spectator journey", href: "/spectator-journey.html", external: true },
     images: [
-      img("ptp-photo-stage.webp", "Shrungeri presenting The River Runs Through It at PIA Queensland's Pitch the Plan event"),
+      photo("ptp-photo-stage.webp", "Shrungeri presenting The River Runs Through It at PIA Queensland's Pitch the Plan event"),
       img("ptp-slide-2.webp", "Slide: We're widening roads for a city the river could move"),
       img("ptp-slide-3.webp", "Slide: The Brisbane River as a transit spine, with the proposed route and landings"),
       img("ptp-slide-4.webp", "Slide: Every landing becomes a neighbourhood"),
       img("ptp-slide-6.webp", "Slide: Legacy, implementation and funding"),
-      img("ptp-photo-presenting.webp", "Shrungeri and co-presenter A/Prof Dorina Pojani presenting the problem slide"),
+      photo("ptp-photo-presenting.webp", "Shrungeri and co-presenter A/Prof Dorina Pojani presenting the problem slide"),
     ],
   },
   {
@@ -65,7 +75,7 @@ export const caseStudies: CaseStudyData[] = [
     description:
       "Working with two staff partners and a fellow student, I am the project's [Data Collection and Synthesis Lead]. We are identifying [accessibility and usability barriers] in the UQ Maps mobile app, with walkthroughs focused on people with physical disabilities. I designed the [user survey], the [task-based wayfinding walkthroughs] and the participant privacy notices, and I am synthesising findings into [journey maps] that will inform recommendations and a design brief for UQ.",
     images: [
-      img("uq-photo-team.webp", "The UQ Maps project team at the 'Have your say on the future of UQ Maps' screen"),
+      photo("uq-photo-team.webp", "The UQ Maps project team at the 'Have your say on the future of UQ Maps' screen"),
       img("uq-1-method.webp", "Graphic: project method, with the parts Shrungeri leads marked"),
       img("uq-2-walkthroughs.webp", "Graphic: wayfinding walkthrough design, one shared task and five routes by access need"),
     ],

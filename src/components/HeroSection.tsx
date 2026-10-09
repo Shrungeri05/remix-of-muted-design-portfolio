@@ -35,6 +35,10 @@ const HeroSection = () => {
       <motion.div
         className="absolute inset-0"
         aria-hidden
+        style={{
+          WebkitMaskImage: "linear-gradient(to bottom, #000 55%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, #000 55%, transparent 100%)",
+        }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
@@ -51,7 +55,7 @@ const HeroSection = () => {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to bottom, hsl(var(--background) / 0.7) 0%, hsl(var(--background) / 0.55) 35%, hsl(var(--background) / 0.75) 60%, hsl(var(--background)) 100%)",
+              "linear-gradient(to bottom, hsl(var(--background) / 0.7) 0%, hsl(var(--background) / 0.55) 35%, hsl(var(--background) / 0.75) 60%, hsl(var(--background) / 0.85) 100%)",
           }}
         />
       </motion.div>

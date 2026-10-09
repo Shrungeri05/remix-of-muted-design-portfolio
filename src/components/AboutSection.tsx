@@ -18,7 +18,7 @@ const AboutSection = () => {
           <img
             src="/images/photo-portrait-ptp.webp"
             alt="Shrungeri Shrowty at PIA Queensland's Pitch the Plan 2026"
-            className="block w-full aspect-[4/5] md:aspect-auto md:h-full md:min-h-[26rem] object-cover object-top"
+            className="block w-full aspect-[4/5] md:aspect-auto md:h-full md:min-h-[26rem] object-cover object-top rounded-xl md:rounded-2xl ring-1 ring-white/10 shadow-[0_40px_80px_-30px_rgba(18,26,36,0.75)]"
             loading="lazy"
           />
         </motion.div>
