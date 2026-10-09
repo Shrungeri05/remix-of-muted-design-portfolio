@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
 
-const PHOTO_CREDIT_URL = "https://unsplash.com/photos/cityscape-view-of-a-large-modern-metropolis-rEGNFvN-poA";
-
 /** Soft dark halo so light text stays readable over the photo. */
 const textHalo = { textShadow: "0 1px 2px rgba(24, 32, 42, 0.55), 0 0 18px rgba(24, 32, 42, 0.45)" };
 
@@ -97,17 +95,6 @@ const HeroSection = () => {
         </motion.p>
       </motion.div>
 
-      <p className="absolute bottom-6 right-8 text-mono text-[11px] text-foreground/60">
-        Photo:{" "}
-        <a
-          href={PHOTO_CREDIT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline underline-offset-2 hover:text-foreground transition-colors"
-        >
-          Sebastian Luo / Unsplash
-        </a>
-      </p>
     </section>
   );
 };
