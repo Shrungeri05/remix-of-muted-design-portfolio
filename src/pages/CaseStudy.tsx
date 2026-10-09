@@ -64,14 +64,13 @@ const CaseStudy = ({ study }: { study: CaseStudyData }) => {
             {renderDescription(study.description)}
           </motion.p>
 
-          <motion.div
-            className="flex flex-wrap items-center gap-x-8 gap-y-3"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            {study.link && (
+          {study.link && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
               <a
                 href={study.link.href}
                 target={study.link.external ? "_blank" : undefined}
@@ -81,11 +80,8 @@ const CaseStudy = ({ study }: { study: CaseStudyData }) => {
                 {study.link.label}
                 <ArrowUpRight className="w-4 h-4" />
               </a>
-            )}
-            <Link to="/" className="text-mono text-sm text-foreground/60 hover:text-foreground transition-colors duration-200">
-              Back to work
-            </Link>
-          </motion.div>
+            </motion.div>
+          )}
         </div>
 
         <div className="flex flex-col gap-10 max-w-5xl mx-auto">
