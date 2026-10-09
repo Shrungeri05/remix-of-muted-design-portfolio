@@ -8,8 +8,8 @@ const ContactSection = () => {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      const sfTime = now.toLocaleTimeString("en-US", {
-        timeZone: "America/Los_Angeles",
+      const sfTime = now.toLocaleTimeString("en-AU", {
+        timeZone: "Australia/Brisbane",
         hour: "numeric",
         minute: "2-digit",
         hour12: true,
@@ -23,24 +23,8 @@ const ContactSection = () => {
   }, []);
 
   const contactLinks = [
-    {
-      label: "Email",
-      text: "hello@mayachen.design",
-      href: "mailto:hello@mayachen.design",
-      external: false,
-    },
-    {
-      label: "LinkedIn",
-      text: "linkedin.com/in/mayachen",
-      href: "https://linkedin.com/in/mayachen",
-      external: true,
-    },
-    {
-      label: "Dribbble",
-      text: "dribbble.com/mayachen",
-      href: "https://dribbble.com/mayachen",
-      external: true,
-    },
+    { label: "Email", text: "s.shrungeri5@gmail.com", href: "mailto:s.shrungeri5@gmail.com", external: false },
+    { label: "LinkedIn", text: "linkedin.com/in/shrungeri-shrowty", href: "https://www.linkedin.com/in/shrungeri-shrowty", external: true },
   ];
 
   return (
@@ -73,7 +57,7 @@ const ContactSection = () => {
                 rel={link.external ? "noopener noreferrer" : undefined}
                 className="flex items-center justify-between py-3 border-b border-foreground/10 group"
               >
-                <span className="text-mono text-sm text-foreground/70 group-hover:text-foreground transition-colors duration-200">
+                <span className="text-mono text-sm text-foreground/70 break-all group-hover:text-foreground transition-colors duration-200">
                   {link.text}
                 </span>
                 {link.external && (
@@ -94,7 +78,7 @@ const ContactSection = () => {
           <h4 className="heading-display text-xl text-foreground mb-8">Location</h4>
           <div className="space-y-2">
             <p className="text-mono text-sm text-foreground/70 flex items-center gap-2">
-              San Francisco, USA <span className="text-lg">🇺🇸</span>
+              Brisbane, Australia
             </p>
             <p className="text-mono text-sm text-foreground/50">
               {currentTime} local time

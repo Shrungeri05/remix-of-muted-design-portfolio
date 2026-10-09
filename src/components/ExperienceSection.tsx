@@ -10,39 +10,18 @@ interface ExperienceItem {
 }
 
 const experiences: ExperienceItem[] = [
-  {
-    company: "Verve",
-    dateRange: "2024-Present",
-    role: "Design Director",
-    link: "/verve",
-  },
-  {
-    company: "Spotify",
-    dateRange: "2020-2024",
-    role: "Staff Designer",
-    link: "/spotify",
-  },
-  {
-    company: "Figma",
-    dateRange: "2016-2020",
-    role: "Senior Designer",
-    link: "/figma",
-  },
-  {
-    company: "Notion",
-    dateRange: "2012-2016",
-    role: "Senior Designer",
-    link: "/notion",
-  },
+  { company: "Pitch the Plan", dateRange: "2026", role: "PIA Qld Finalist", link: "/pitch-the-plan" },
+  { company: "UQ Maps Co-Design", dateRange: "2026", role: "Data Collection & Synthesis Lead", link: "/uq-maps" },
+  { company: "Armidale Botanic Garden", dateRange: "2026", role: "Visitor Experience Analyst", link: "/armidale" },
+  { company: "West End Urban Design", dateRange: "2025", role: "Urban Design Studio", link: "/west-end" },
+  { company: "GIS Land Suitability", dateRange: "2026", role: "Spatial Analysis", link: "/gis-suitability" },
 ];
 
-const personalProjects: ExperienceItem[] = [
-  {
-    company: "Explorations + Motion",
-    dateRange: "",
-    role: "Personal Project",
-    link: "/explorations",
-  },
+const recognition: ExperienceItem[] = [
+  { company: "PIA Queensland Pitch the Plan", dateRange: "2026", role: "One of five statewide finalists" },
+  { company: "PIA Qld Emerging Planners Network", dateRange: "2027", role: "Incoming Committee Member" },
+  { company: "PIA Queensland Mentoring Program", dateRange: "2026-2027", role: "Mentee" },
+  { company: "UQ Get Set Mentor", dateRange: "2026", role: "Mentor to five commencing students" },
 ];
 
 const ExperienceCard = ({ item, index }: { item: ExperienceItem; index: number }) => {
@@ -59,12 +38,12 @@ const ExperienceCard = ({ item, index }: { item: ExperienceItem; index: number }
           <span className="text-mono text-xs text-foreground/40">0{index + 1}</span>
           <span className="heading-display text-xl md:text-2xl text-foreground">{item.company}</span>
         </div>
-        <div className="flex items-center gap-6 text-mono text-sm">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-1 text-mono text-sm md:text-right md:justify-end">
           <span className="text-foreground/50">{item.dateRange}</span>
           <span className="text-foreground/70">{item.role}</span>
         </div>
       </div>
-      <ArrowUpRight className="w-5 h-5 text-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+      {item.link && <ArrowUpRight className="w-5 h-5 shrink-0 text-foreground/30 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />}
     </motion.div>
   );
 
@@ -85,7 +64,7 @@ const ExperienceSection = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        Experience
+        Selected Work
       </motion.h3>
       <div className="flex flex-col">
         {experiences.map((item, index) => (
@@ -100,11 +79,11 @@ const ExperienceSection = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        Personal Projects
+        Recognition &amp; Engagement
       </motion.h3>
       <div className="flex flex-col">
-        {personalProjects.map((item, index) => (
-          <ExperienceCard key={item.company} item={item} index={index + experiences.length} />
+        {recognition.map((item, index) => (
+          <ExperienceCard key={item.company} item={item} index={index} />
         ))}
       </div>
     </section>
