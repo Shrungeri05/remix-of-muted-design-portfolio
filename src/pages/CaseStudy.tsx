@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -82,7 +82,7 @@ const CaseStudy = ({ study }: { study: CaseStudyData }) => {
                 <ArrowUpRight className="w-4 h-4" />
               </a>
             )}
-            <Link to="/#work" className="text-mono text-sm text-foreground/60 hover:text-foreground transition-colors duration-200">
+            <Link to="/" className="text-mono text-sm text-foreground/60 hover:text-foreground transition-colors duration-200">
               Back to work
             </Link>
           </motion.div>
@@ -106,6 +106,16 @@ const CaseStudy = ({ study }: { study: CaseStudyData }) => {
         <p className="text-mono text-xs text-foreground/50 text-center mt-10">
           Tap or click any image to enlarge it.
         </p>
+
+        <div className="flex justify-center mt-20">
+          <Link
+            to="/"
+            className="group inline-flex items-center gap-3 rounded-full border border-foreground/30 px-7 py-3 text-mono text-sm text-foreground hover:bg-foreground/10 hover:border-foreground/60 transition-colors duration-200"
+          >
+            <ArrowLeft className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1" />
+            Back to work
+          </Link>
+        </div>
       </main>
 
       <Footer />

@@ -4,6 +4,7 @@ import { ArrowUpRight, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
 import { caseStudies, type CaseStudyData } from "@/data/caseStudies";
+import { saveHomeScroll } from "@/lib/workScroll";
 
 interface EngagementItem {
   name: string;
@@ -88,7 +89,7 @@ const ProjectRowText = ({ study, index }: { study: CaseStudyData; index: number 
 );
 
 const ProjectRow = ({ study, index }: { study: CaseStudyData; index: number }) => (
-  <Link to={`/${study.slug}`} aria-label={`${study.listName}: view case study`}>
+  <Link to={`/${study.slug}`} onClick={saveHomeScroll} aria-label={`${study.listName}: view case study`}>
     <motion.div
       className="experience-card group border-b border-foreground/10"
       initial={{ opacity: 0, y: 20 }}

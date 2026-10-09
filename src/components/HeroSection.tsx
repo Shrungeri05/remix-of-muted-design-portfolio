@@ -1,5 +1,10 @@
 import { motion } from "framer-motion";
 
+const PHOTO_CREDIT_URL = "https://unsplash.com/photos/cityscape-view-of-a-large-modern-metropolis-rEGNFvN-poA";
+
+/** Soft dark halo so light text stays readable over the photo. */
+const textHalo = { textShadow: "0 1px 2px rgba(24, 32, 42, 0.55), 0 0 18px rgba(24, 32, 42, 0.45)" };
+
 const HeroSection = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -25,63 +30,80 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center px-8 pt-32 pb-16">
+    <section className="relative min-h-screen flex flex-col justify-center items-center px-8 pt-32 pb-24 overflow-hidden">
+      {/* Backdrop: Brisbane skyline, toned to the site colour and fading into the page */}
+      <motion.div
+        className="absolute inset-0"
+        aria-hidden
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+      >
+        <img
+          src="/images/hero-brisbane.webp"
+          alt=""
+          className="w-full h-full object-cover object-[50%_40%]"
+          style={{ filter: "saturate(0.7)" }}
+          loading="eager"
+        />
+        <div className="absolute inset-0 bg-background mix-blend-color opacity-50" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, hsl(var(--background) / 0.7) 0%, hsl(var(--background) / 0.55) 35%, hsl(var(--background) / 0.75) 60%, hsl(var(--background)) 100%)",
+          }}
+        />
+      </motion.div>
+
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="text-center max-w-5xl mx-auto"
+        className="relative text-center max-w-5xl mx-auto"
       >
         {/* Large Display Headline */}
         <motion.div className="mb-16" variants={itemVariants}>
-          <h1 className="heading-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-foreground leading-[0.9] tracking-tight">
+          <h1
+            className="heading-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-foreground leading-[0.9] tracking-tight"
+            style={textHalo}
+          >
             <span className="block">SHRUNGERI</span>
             <span className="block mt-2 md:mt-4">SHROWTY</span>
           </h1>
         </motion.div>
 
         {/* Tagline */}
-        <motion.div className="mb-20" variants={itemVariants}>
-          <p className="text-mono text-sm md:text-base tracking-widest text-foreground/70 uppercase">
+        <motion.div className="mb-16" variants={itemVariants} style={textHalo}>
+          <p className="text-mono text-sm md:text-base font-semibold tracking-widest text-foreground uppercase">
             Master of Urban &amp; Regional Planning
           </p>
-          <p className="text-mono text-xs md:text-sm tracking-widest text-foreground/50 uppercase mt-3">
+          <p className="text-mono text-xs md:text-sm font-medium tracking-widest uppercase mt-3 text-[#E7DCC6]">
             The University of Queensland
           </p>
         </motion.div>
 
-        {/* Featured Image */}
-        <motion.div 
-          className="w-full max-w-4xl mx-auto"
+        {/* Statement */}
+        <motion.p
+          className="body-text max-w-xl mx-auto text-center text-foreground"
           variants={itemVariants}
-        >
-          <img
-            src="/images/hero-brisbane.webp"
-            alt="Brisbane city skyline and river"
-            className="block w-full aspect-[4/3] object-cover"
-            loading="eager"
-          />
-          <p className="text-mono text-[11px] text-foreground/50 text-right mt-2">
-            Photo:{" "}
-            <a
-              href="https://unsplash.com/photos/cityscape-view-of-a-large-modern-metropolis-rEGNFvN-poA"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline underline-offset-2 hover:text-foreground/80 transition-colors"
-            >
-              Sebastian Luo / Unsplash
-            </a>
-          </p>
-        </motion.div>
-
-        {/* Description below image */}
-        <motion.p 
-          className="body-text max-w-xl mx-auto mt-16 text-center"
-          variants={itemVariants}
+          style={textHalo}
         >
           Planning sustainable, connected and inclusive places.
         </motion.p>
       </motion.div>
+
+      <p className="absolute bottom-6 right-8 text-mono text-[11px] text-foreground/60">
+        Photo:{" "}
+        <a
+          href={PHOTO_CREDIT_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline underline-offset-2 hover:text-foreground transition-colors"
+        >
+          Sebastian Luo / Unsplash
+        </a>
+      </p>
     </section>
   );
 };

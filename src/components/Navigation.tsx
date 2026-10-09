@@ -69,7 +69,15 @@ const Navigation = ({ currentPage, currentIndex = "01" }: NavigationProps) => {
       <div className="max-w-7xl mx-auto px-8 py-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="text-foreground hover:opacity-80 transition-opacity duration-200" aria-label="Home">
+          <Link
+            to="/"
+            onClick={() => {
+              if (isHome) window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            className="text-foreground hover:opacity-80 transition-opacity duration-200"
+            aria-label={isHome ? "Back to top" : "Back to work"}
+            title={isHome ? "Back to top" : "Back to work"}
+          >
             <div className="w-10 h-10 rounded-full bg-foreground/10 border border-foreground/20 flex items-center justify-center">
               <span className="heading-display text-lg">S</span>
             </div>
