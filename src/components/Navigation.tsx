@@ -82,10 +82,10 @@ const Navigation = ({ currentPage, currentIndex = "01" }: NavigationProps) => {
       {/* Soft fade behind the bar so page content scrolling underneath doesn't clash with it */}
       <div
         aria-hidden
-        className={`pointer-events-none absolute inset-x-0 top-0 h-36 transition-opacity duration-500 ${scrolled ? "opacity-100" : "opacity-0"}`}
+        className={`pointer-events-none absolute inset-x-0 top-0 h-[4.5rem] transition-opacity duration-500 ${scrolled ? "opacity-100" : "opacity-0"}`}
         style={{
           background:
-            "linear-gradient(to bottom, hsl(var(--background)) 0%, hsl(var(--background) / 0.97) 55%, hsl(var(--background) / 0) 100%)",
+            "linear-gradient(to bottom, hsl(var(--background)) 0%, hsl(var(--background) / 0.95) 60%, hsl(var(--background) / 0) 100%)",
         }}
       />
       <div className="relative max-w-7xl mx-auto px-8 py-8">

@@ -28,10 +28,12 @@ export interface CaseStudyData {
   images: CaseStudyImage[];
 }
 
+const capitalise = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+
 const img = (file: string, alt: string): CaseStudyImage => ({
   src: `/images/${file}`,
   alt,
-  caption: alt.replace(/^(Graphic|Slide):\s*/, ""),
+  caption: capitalise(alt.replace(/^(Graphic|Slide):\s*/, "")),
   kind: "graphic",
 });
 const photo = (file: string, alt: string): CaseStudyImage => ({ ...img(file, alt), kind: "photo" });
@@ -106,12 +108,12 @@ export const caseStudies: CaseStudyData[] = [
     listName: "West End Urban Design",
     listDate: "2025",
     listContext: "PLAN7122",
-    listRole: "Urban Design Studio",
+    listRole: "Urban Design Theory & Practice",
     navLabel: "West End",
     index: "05",
     title: "A Connected, Creative West End",
     subtitle:
-      "Urban Design Studio (PLAN7122): Site Development in West End, The University of Queensland. Semester 2, 2025.",
+      "Urban Design Theory & Practice (PLAN7122): Site Development in West End, The University of Queensland. Semester 2, 2025.",
     description:
       "An urban design proposal for Victoria Street and Ferry Road that turns underused street edges into welcoming public spaces celebrating West End's creative identity. Built around [activity, identity and form], it uses small-scale placemaking (pocket plazas, spillover space and modular street furniture) and a [safer, greener Victoria Street] with wider footpaths, deep planting and bike lanes. I produced the [design, renders and site plan].",
     images: [
@@ -167,11 +169,11 @@ export const caseStudies: CaseStudyData[] = [
     listName: "Sunshine Coast Transport",
     listDate: "2025",
     listContext: "PLAN7116",
-    listRole: "Transport System Analysis",
+    listRole: "Transport Planning",
     navLabel: "Sunshine Coast",
     index: "08",
     title: "Making Room for Active Travel",
-    subtitle: "Transport System Analysis (PLAN7116): Sunshine Coast. Semester 1, 2025. Group of six.",
+    subtitle: "Transport Planning (PLAN7116): Sunshine Coast. Semester 1, 2025. Group of six.",
     description:
       "Our group analysed the Sunshine Coast's transport system ahead of the 2032 Games, each member taking one lens; mine was [non-motorised modes]. Active travel is strong in Maroochydore but thins out in outer localities like Mooloolaba and Forest Glen, where walking and cycling are mostly recreational. I developed the [Encourage Active Mobility strategy] within our five-year plan to reduce car dependency, setting out actions for council, community and the private sector.",
     images: [
@@ -186,12 +188,12 @@ export const caseStudies: CaseStudyData[] = [
     listName: "Mumbai: Relocating Informality",
     listDate: "2026",
     listContext: "PLAN7612",
-    listRole: "Global South Cities",
+    listRole: "Global South Cities: Development Planning Theory & Practice",
     navLabel: "Mumbai",
     index: "09",
     title: "Relocating Informality",
     subtitle:
-      "Global South Cities (PLAN7612): Redevelopment and Urban Governance in Mumbai. Semester 1, 2026.",
+      "Global South Cities: Development Planning Theory & Practice (PLAN7612): Redevelopment and Urban Governance in Mumbai. Semester 1, 2026.",
     description:
       "About half of Mumbai's 20 million residents live in informal settlements on less than a tenth of its land. Drawing on Roy's idea of [informality as governance], I analysed the Slum Rehabilitation Authority and the [Dharavi Redevelopment Project], arguing that redevelopment often relocates informality to the city's edge rather than removing it. I proposed [tenure-first, community-led upgrading] as a fairer alternative, drawing on Thailand's Baan Mankong programme and the work of SPARC, Mahila Milan and the National Slum Dwellers Federation.",
     images: [

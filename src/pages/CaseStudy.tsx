@@ -25,7 +25,7 @@ const CaseStudy = ({ study }: { study: CaseStudyData }) => {
       <div className="relative z-10">
       <Navigation currentPage={study.navLabel} currentIndex="01" />
 
-      <main className="min-h-screen pt-40 pb-16 px-8 overflow-x-clip">
+      <main className="min-h-screen pt-40 pb-16 px-8">
         <div className="max-w-3xl mx-auto text-center">
           <motion.h1
             className="heading-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-foreground mb-8 leading-[0.95]"
