@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Maya Chen Portfolio - Atmospheric Forest Theme
+   Muted slate-blue palette with cream typography */
+
+@layer base {
+  :root {
+    /* Core Background - Muted slate blue */
+    --background: 210 15% 42%;
+    --foreground: 40 30% 95%;
+
+    /* Card surfaces - slightly lighter */
+    --card: 210 14% 38%;
+    --card-foreground: 40 30% 95%;
+
+    /* Popover */
+    --popover: 210 14% 38%;
+    --popover-foreground: 40 30% 95%;
+
+    /* Primary - Cream/off-white */
+    --primary: 40 30% 95%;
+    --primary-foreground: 210 15% 42%;
+
+    /* Secondary - Deeper slate */
+    --secondary: 210 12% 35%;
+    --secondary-foreground: 40 30% 95%;
+
+    /* Muted text colors */
+    --muted: 210 12% 50%;
+    --muted-foreground: 40 20% 80%;
+
+    /* Accent */
+    --accent: 210 12% 48%;
+    --accent-foreground: 40 30% 95%;
+
+    /* Destructive */
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 40 30% 95%;
+
+    /* Borders - subtle cream */
+    --border: 40 20% 85% / 0.15;
+    --input: 40 20% 85% / 0.15;
+    --ring: 40 30% 95% / 0.3;
+
+    --radius: 0.5rem;
+
+    /* Custom portfolio tokens */
+    --text-primary: 40 30% 95%;
+    --text-secondary: 40 20% 80%;
+    --text-muted: 40 15% 65%;
+    --text-tertiary: 40 10% 55%;
+    
+    /* Link colors - warm cream */
+    --link: 40 40% 90%;
+    --link-hover: 40 50% 98%;
+    
+    /* Hover states */
+    --hover-subtle: 40 30% 95% / 0.05;
+    --hover-strong: 40 30% 95% / 0.1;
+    
+    /* Nav backdrop */
+    --nav-backdrop: 210 15% 42% / 0.85;
+
+    /* Sidebar (keeping for compatibility) */
+    --sidebar-background: 210 15% 42%;
+    --sidebar-foreground: 40 20% 80%;
+    --sidebar-primary: 40 30% 95%;
+    --sidebar-primary-foreground: 210 15% 42%;
+    --sidebar-accent: 210 12% 48%;
+    --sidebar-accent-foreground: 40 30% 95%;
+    --sidebar-border: 40 20% 85% / 0.15;
+    --sidebar-ring: 40 30% 95% / 0.3;
+  }
+
+  .dark {
+    /* Same as light - this is a single-theme design */
+    --background: 210 15% 42%;
+    --foreground: 40 30% 95%;
+    --card: 210 14% 38%;
+    --card-foreground: 40 30% 95%;
+    --popover: 210 14% 38%;
+    --popover-foreground: 40 30% 95%;
+    --primary: 40 30% 95%;
+    --primary-foreground: 210 15% 42%;
+    --secondary: 210 12% 35%;
+    --secondary-foreground: 40 30% 95%;
+    --muted: 210 12% 50%;
+    --muted-foreground: 40 20% 80%;
+    --accent: 210 12% 48%;
+    --accent-foreground: 40 30% 95%;
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 40 30% 95%;
+    --border: 40 20% 85% / 0.15;
+    --input: 40 20% 85% / 0.15;
+    --ring: 40 30% 95% / 0.3;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+}
+
+@layer components {
+  /* Display heading - elegant serif */
+  .heading-display {
+    font-family: 'Playfair Display', Georgia, serif;
+    @apply font-medium tracking-tight;
+  }
+
+  /* Mono text for navigation numbers and metadata */
+  .text-mono {
+    font-family: 'DM Mono', 'SF Mono', monospace;
+    @apply tracking-wide;
+  }
+
+  /* Section header styling */
+  .section-header {
+    font-family: 'DM Mono', monospace;
+    @apply text-sm font-medium tracking-widest uppercase;
+    color: hsl(var(--text-secondary));
+  }
+
+  /* Experience card styling */
+  .experience-card {
+    @apply flex items-center gap-6 px-4 py-4 rounded-lg transition-all duration-300 cursor-pointer;
+  }
+
+  .experience-card:hover {
+    background: hsl(var(--hover-strong));
+  }
+
+  /* Text emphasis for bold keywords */
+  .text-emphasis {
+    @apply font-medium;
+    color: hsl(var(--text-primary));
+  }
+
+  /* External link styling */
+  .external-link {
+    @apply inline-flex items-center gap-1 font-medium transition-colors duration-200 underline underline-offset-4 decoration-1;
+    color: hsl(var(--text-primary));
+    text-decoration-color: hsl(var(--text-muted));
+  }
+
+  .external-link:hover {
+    color: hsl(var(--link-hover));
+    text-decoration-color: hsl(var(--link-hover));
+  }
+
+  /* Body text */
+  .body-text {
+    @apply text-lg leading-relaxed font-normal;
+    color: hsl(var(--text-secondary));
+  }
+
+  /* Navigation number badge */
+  .nav-number {
+    @apply w-8 h-8 rounded-full border flex items-center justify-center text-xs;
+    border-color: hsl(var(--text-secondary));
+    font-family: 'DM Mono', monospace;
+  }
+}
+
+@layer utilities {
+  /* Custom opacity utilities for text */
+  .text-cream {
+    color: hsl(40 30% 95%);
+  }
+
+  .text-cream-80 {
+    color: hsl(40 20% 80%);
+  }
+
+  .text-cream-60 {
+    color: hsl(40 15% 65%);
+  }
+}
